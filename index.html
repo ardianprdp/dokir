@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,76 +11,87 @@
             background-color: #e9ecef;
             font-family: Arial, sans-serif;
         }
+
         .container {
             margin-top: 50px;
         }
+
         h1 {
             margin-bottom: 30px;
             color: #343a40;
         }
+
         .card {
             margin-bottom: 20px;
             border: none;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         .card-title {
             font-size: 1.5rem;
             color: #007bff;
         }
+
         .list-group-item {
             background-color: #f8f9fa;
             border: none;
         }
+
         .list-group-item a {
             color: #007bff;
             text-decoration: none;
         }
+
         .list-group-item a:hover {
             text-decoration: underline;
         }
+
         .btn-primary {
             margin-top: 20px;
             background-color: #007bff;
             border: none;
             border-radius: 5px;
         }
+
         .btn-primary:hover {
             background-color: #0056b3;
         }
+
         .btn-danger {
             margin-left: 10px;
         }
     </style>
 </head>
+
 <body>
 
-<div class="container">
-    <h1 class="text-center">Pengumpulan Dokumen</h1>
-    <button class="btn btn-primary mb-4" onclick="addYear ()">Tambah Tahun</button>
-    <div id="yearCards" class="row"></div>
-</div>
+    <div class="container">
+        <h1 class="text-center">Pengumpulan Dokumen</h1>
+        <button class="btn btn-primary mb-4" onclick="addYear ()">Tambah Tahun</button>
+        <div id="yearCards" class="row"></div>
+    </div>
 
-<script>
-    let data = {};
+    <script>
+        let data = {};
 
-    function fetchData() {
-        fetch('data.json')
-            .then(response => response.json())
-            .then(jsonData => {
-                data = jsonData;
-                renderCards();
-            })
-            .catch(error => console.error('Error fetching data:', error));
-    }
+        function fetchData() {
+            fetch('data.json')
+                .then(response => response.json())
+                .then(jsonData => {
+                    data = jsonData;
+                    renderCards();
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
 
-    function renderCards() {
-        const yearCards = document.getElementById('yearCards');
-        yearCards.innerHTML = ''; // Clear existing cards
-        for (const year in data) {
-            const card = document.createElement('div');
-            card.className = 'col-md-12';
-            card.innerHTML = `
+        function renderCards() {
+            const yearCards = document.getElementById('yearCards');
+            yearCards.innerHTML = ''; // Clear existing cards
+            for (const year in data) {
+                const card = document.createElement('div');
+                card.className = 'col-md-12';
+                card.innerHTML = `
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Dokumen ${year}</h5>
@@ -97,47 +109,48 @@
                     </div>
                 </div>
             `;
-            yearCards.appendChild(card);
+                yearCards.appendChild(card);
+            }
         }
-    }
 
-    function addYear() {
-        const newYear = prompt("Masukkan tahun baru:");
-        if (newYear && !data[newYear]) {
-            data[newYear] = [];
-            renderCards();
-        } else {
-            alert("Tahun sudah ada atau tidak valid.");
+        function addYear() {
+            const newYear = prompt("Masukkan tahun baru:");
+            if (newYear && !data[newYear]) {
+                data[newYear] = [];
+                renderCards();
+            } else {
+                alert("Tahun sudah ada atau tidak valid.");
+            }
         }
-    }
 
-    function addItem(year) {
-        const title = prompt("Masukkan judul dokumen:");
-        const link = prompt("Masukkan URL dokumen:");
-        if (title && link) {
-            data[year].push({ title, link });
-            renderCards();
+        function addItem(year) {
+            const title = prompt("Masukkan judul dokumen:");
+            const link = prompt("Masukkan URL dokumen:");
+            if (title && link) {
+                data[year].push({ title, link });
+                renderCards();
+            }
         }
-    }
 
-    function editItem(year, index) {
-        const newTitle = prompt("Masukkan judul baru:", data[year][index].title);
-        const newLink = prompt("Masukkan URL baru:", data[year][index].link);
-        if (newTitle && newLink) {
-            data[year][index] = { title: newTitle, link: newLink };
-            renderCards();
+        function editItem(year, index) {
+            const newTitle = prompt("Masukkan judul baru:", data[year][index].title);
+            const newLink = prompt("Masukkan URL baru:", data[year][index].link);
+            if (newTitle && newLink) {
+                data[year][index] = { title: newTitle, link: newLink };
+                renderCards();
+            }
         }
-    }
 
-    function deleteItem(year, index) {
-        if (confirm(`Apakah Anda yakin ingin menghapus item "${data[year][index].title}"?`)) {
-            data[year].splice(index, 1);
-            renderCards();
+        function deleteItem(year, index) {
+            if (confirm(`Apakah Anda yakin ingin menghapus item "${data[year][index].title}"?`)) {
+                data[year].splice(index, 1);
+                renderCards();
+            }
         }
-    }
 
-    window.onload = fetchData;
-</script>
+        window.onload = fetchData;
+    </script>
 
 </body>
+
 </html>
