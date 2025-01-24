@@ -68,7 +68,6 @@
 
     <div class="container">
         <h1 class="text-center">Pengumpulan Dokumen</h1>
-        <button class="btn btn-primary mb-4" onclick="addYear ()">Tambah Tahun</button>
         <div id="yearCards" class="row"></div>
     </div>
 
@@ -100,9 +99,6 @@
                             ${data[year].map((item, index) => `
                                 <li class="list-group-item justify-content-between align-items-center">
                                     <a href="${item.link}" target="_blank">${item.title}</a>
-                                    <div>
-                                        <button class="btn btn-primary btn-sm mr-1" onclick="editItem('${year}', ${index})">Edit</button>
-                                    </div>
                                 </li>
                             `).join('')}
                         </ul>
